@@ -108,3 +108,23 @@ pip install pycryptodome
 python Simple_tcpClient.py ## Cliente
 python Simple_tcpClient.py ## Servidor
 ```
+
+# 📊 Análise do Tráfego com Wireshark
+
+A imagem abaixo mostra a captura do tráfego TCP entre o Cliente (Alice) e o Servidor (Bob) utilizando o protocolo **RSA autoral**:
+
+<img width="1890" height="939" alt="image" src="https://github.com/user-attachments/assets/75d492bb-481b-4e48-ad79-461ce05b2515" />
+
+- **Fonte:** IP do cliente `10.1.70.36`  
+- **Destino:** IP do servidor `10.1.70.35`  
+- **Porta do servidor:** `1300`  
+- **Protocolo:** TCP
+
+## Observações importantes:
+
+- Cada linha da captura representa um segmento TCP enviado ou recebido.  
+- O **payload** (lado direito, em hexadecimal) mostra os dados **criptografados**, garantindo que a mensagem trocada entre cliente e servidor **não pode ser lida por terceiros**.  
+- O fluxo demonstra o **handshake TCP inicial**, envio da mensagem criptografada e recebimento da resposta criptografada.  
+- Apesar de o Wireshark capturar os pacotes, os dados da mensagem permanecem **cifrados**, evidenciando o funcionamento seguro do **RSA autoral** implementado.
+
+📌 **Conclusão:** a comunicação cliente-servidor está fluindo corretamente, e as mensagens estão protegidas contra interceptação.
