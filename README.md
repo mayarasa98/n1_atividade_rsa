@@ -77,7 +77,10 @@ Este projeto demonstra uma comunicação **segura** entre um **cliente** e um **
 ### 1. Instale as dependências
 ```bash
 pip install pycryptodome
+```
 
 ### 2. Dê o comando que executa os arquivos de cliente e servidor
+```bash
 python Simple_tcpClient.py ## Cliente
 python Simple_tcpClient.py ## Servidor
+```
