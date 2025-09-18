@@ -11,7 +11,7 @@
 
 ## 🔐 Comunicação Cliente-Servidor com RSA (4096 bits)
 
-Este projeto demonstra uma comunicação **segura** entre um **cliente** e um **servidor** utilizando **Python**, **sockets** e **criptografia assimétrica RSA** implementada manualmente, sem bibliotecas externas.  
+Essa atividade demonstra uma comunicação **segura** entre um **cliente** e um **servidor** utilizando **Python**, **sockets** e **criptografia assimétrica RSA** implementada manualmente, sem bibliotecas externas.  
 O objetivo é enviar mensagens de forma segura, garantindo **confidencialidade**, ou seja, apenas o destinatário legítimo consegue ler a mensagem.
 
 ---
