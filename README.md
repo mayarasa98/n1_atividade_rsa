@@ -11,7 +11,7 @@
 
 ## 🔐 Comunicação Cliente-Servidor com RSA (4096 bits)
 
-Este projeto demonstra uma comunicação **segura** entre um **cliente** e um **servidor** utilizando **Python**, **sockets** e **criptografia assimétrica RSA** com o esquema de cifra **PKCS#1 OAEP**.  
+Este projeto demonstra uma comunicação **segura** entre um **cliente** e um **servidor** utilizando **Python**, **sockets** e **criptografia assimétrica RSA** implementada manualmente, sem bibliotecas externas.  
 O objetivo é enviar mensagens de forma segura, garantindo **confidencialidade**, ou seja, apenas o destinatário legítimo consegue ler a mensagem.
 
 ---
@@ -23,15 +23,15 @@ O objetivo é enviar mensagens de forma segura, garantindo **confidencialidade**
 - Mensagens criptografadas com a **chave pública** só podem ser descriptografadas pela **chave privada** correspondente.
 - Garante **sigilo** e **segurança na troca de informações**.
 
-### 2. PKCS#1 OAEP
-- É um **esquema de padding** para RSA.
-- Aumenta a segurança contra ataques de **criptanálise**.
-- Permite criptografar pequenas mensagens de forma segura.
-
-### 3. Sockets TCP
+### 2. Sockets TCP
 - Protocolo **TCP/IP** para comunicação confiável.
 - Permite conexão **direta entre cliente e servidor**.
 - Garante que os dados cheguem na ordem correta.
+
+### 3. Implementação Manual do RSA
+- Geração de **números primos grandes** (4096 bits) usando teste de primalidade Miller-Rabin.
+- Cálculo de **chaves públicas e privadas** sem bibliotecas externas.
+- Criptografia e descriptografia feita via **aritmética modular** (`pow`).
 
 ---
 
@@ -42,7 +42,7 @@ O objetivo é enviar mensagens de forma segura, garantindo **confidencialidade**
 - Envio de mensagens criptografadas:
   - Cliente envia uma mensagem segura.
   - Servidor descriptografa, processa (transforma em MAIÚSCULA) e retorna a resposta criptografada.
-- Comunicação bidirecional **100% segura**.
+- Comunicação bidirecional **100% segura**, sem dependências externas.
 
 ---
 
@@ -50,9 +50,8 @@ O objetivo é enviar mensagens de forma segura, garantindo **confidencialidade**
 
 - **Python 3.12**
 - **socket** → comunicação TCP/IP.
-- **PyCryptodome** → biblioteca de criptografia:
-  - `RSA` → geração de chaves públicas/privadas.
-  - `PKCS1_OAEP` → algoritmo de cifra assimétrica.
+- **random e math** → geração de primos e operações matemáticas para RSA.
+- **Funções próprias** → teste de primalidade, inverso modular, criptografia/descriptografia.
 
 ---
 
@@ -68,8 +67,8 @@ O objetivo é enviar mensagens de forma segura, garantindo **confidencialidade**
 ### 1. Servidor
 
 1. Gera **par de chaves RSA (4096 bits)**:
-   - `server_private` → chave privada.
-   - `server_public` → chave pública.
+   - `private` → chave privada.
+   - `public` → chave pública.
 2. Cria um **socket TCP**, vincula ao endereço e porta definidos (`HOST`, `PORT`) e aguarda conexão.
 3. Envia sua **chave pública** para o cliente.
 4. Recebe a **chave pública do cliente**.
@@ -82,8 +81,8 @@ O objetivo é enviar mensagens de forma segura, garantindo **confidencialidade**
 ### 2. Cliente
 
 1. Gera **par de chaves RSA (4096 bits)**:
-   - `client_private` → chave privada.
-   - `client_public` → chave pública.
+   - `private` → chave privada.
+   - `public` → chave pública.
 2. Conecta ao servidor via **socket TCP**.
 3. Recebe a **chave pública do servidor**.
 4. Envia sua **chave pública** ao servidor.
@@ -98,15 +97,10 @@ O objetivo é enviar mensagens de forma segura, garantindo **confidencialidade**
 
 ## ▶️ Como Executar
 
-### 1. Instale as dependências
+### 1. Dê o comando que executa os arquivos de cliente e servidor
 ```bash
-pip install pycryptodome
-```
-
-### 2. Dê o comando que executa os arquivos de cliente e servidor
-```bash
+python Simple_tcpServer.py ## Servidor
 python Simple_tcpClient.py ## Cliente
-python Simple_tcpClient.py ## Servidor
 ```
 
 # 📊 Análise do Tráfego com Wireshark
@@ -127,4 +121,4 @@ A imagem abaixo mostra a captura do tráfego TCP entre o Cliente (Alice) e o Ser
 - O fluxo demonstra o **handshake TCP inicial**, envio da mensagem criptografada e recebimento da resposta criptografada.  
 - Apesar de o Wireshark capturar os pacotes, os dados da mensagem permanecem **cifrados**, evidenciando o funcionamento seguro do **RSA autoral** implementado.
 
-📌 **Conclusão:** a comunicação cliente-servidor está fluindo corretamente, e as mensagens estão protegidas contra interceptação.
+📌 **Considerações finais:** a comunicação cliente-servidor está fluindo corretamente, e as mensagens estão protegidas contra interceptação.
